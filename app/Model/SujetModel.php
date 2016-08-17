@@ -1,25 +1,39 @@
 <?php 
 namespace Model;
+use Model\Sujet;
 
 class SujetModel extends \W\Model\Model {
-	public function getMembre($idMembreARecuperer){
+	private $_listeSujet;
 
-		//// Récupère une ligne de la table en fonction de l'identifiant id_membre
-		$Membre = $this -> find($idMembreARecuperer);
-		
-			//creation de l'objet $ObjetMembre qui va récuperer les données de la base de données 
-		$ObjetMembre = new Membre(
-			$Membre['nom'],
-			$Membre['prenom'],
-			$Membre['pseudo'],
-			$Membre['mail'],
-			$Membre['nationalite'],
-			$Membre['age_public'],
-			$Membre['genre'],
-			$Membre['photo']
+	public function getSujet($idSujetARecuperer){
+
+		$sujet= $this ->find($idSujetARecuperer);
+
+
+		$ObjetSujet = new Sujet (
+			$sujet['nom_sujet'],
+			$sujet['photo_sujet'],
+			$sujet['description_sujet'],
+			$sujet['nom_ci']
 			);
+        return $ObjetSujet;
 
-		return $ObjetMembre;
+	}
 
+		public function getTousSujets() {
+			
+		$this->setTable('sujet_ci');
+		$this->setPrimaryKey('id_sujet');
+		$TousSujets = $this->findAll();
+
+		foreach ($TousSujets as $sujet) {
+		$this->_listeSujet[] = new Sujet (
+			$sujet['nom_sujet'],
+			$sujet['photo_sujet']
+			);
 		}
+
+        return $this->_listeSujet;
+
+	}
 }
