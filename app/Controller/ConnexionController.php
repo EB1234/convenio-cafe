@@ -43,6 +43,7 @@ class ConnexionController extends Controller
 		
 				// 3 -- Puis on le redirige
 				$this->redirectToRoute('default_home');
+				coucou!!
 			}
 		
 			
