@@ -13,9 +13,19 @@ class SujetController extends Controller
 	 * Page d'accueil par défaut
 	 */
 	public function sujet()
-	{
-		$loggedUser = $this->getUser();		
-		$this->show('membre/sujet',['loggedUser'=>$loggedUser]);
+		{
+		
+		//on crée un nouvel objet qui permet de recuperer les données de la base de donnée
+		$db = new SujetModel;
+		$db->setTable('sujet_ci');
+		$db->setPrimaryKey('id_sujet');
+
+
+		$UnSujet = $db->getSujet(2);
+
+		
+		$this->show('membre/sujet',['sujet'=> $UnSujet]);
+		
 	}
 
 	// public function profil()
